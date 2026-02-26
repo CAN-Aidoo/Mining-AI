@@ -1,0 +1,46 @@
+# =============================================================================
+# Mining AI Backend - Production Dependencies (Python 3.12)
+# =============================================================================
+
+# --- Web Framework ---
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.20
+
+# --- Database (Async) ---
+sqlalchemy[asyncio]==2.0.36
+asyncpg==0.30.0
+alembic==1.14.0
+psycopg2-binary==2.9.10
+
+# --- Settings & Validation ---
+pydantic==2.10.4
+pydantic-settings==2.7.0
+
+# --- Authentication ---
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+
+# --- HTTP Client ---
+httpx==0.28.1
+
+# --- Task Queue ---
+celery[redis]==5.4.0
+redis==5.2.1
+
+# --- Vector Database ---
+chromadb==0.5.20
+
+# --- AI / LLM Clients ---
+openai==1.59.4
+anthropic==0.42.0
+tiktoken==0.8.0
+
+# --- Document Processing ---
+python-docx==1.1.2
+
+# --- Utilities ---
+orjson==3.10.12
+tenacity==9.0.0
+structlog==24.4.0
