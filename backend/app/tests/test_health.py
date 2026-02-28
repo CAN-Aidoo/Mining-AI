@@ -31,8 +31,6 @@ async def test_stub_routes_return_501(async_client: AsyncClient) -> None:
         "/api/v1/research/",
         "/api/v1/documents/",
         "/api/v1/prototypes/",
-        "/api/v1/projects/",
-        "/api/v1/auth/me",
     ]
     for route in stub_routes:
         response = await async_client.get(route)

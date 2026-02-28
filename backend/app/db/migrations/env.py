@@ -17,10 +17,10 @@ from app.config import get_settings
 
 # Import all models here so Alembic can detect them for autogenerate
 from app.models.base import Base  # noqa: F401
+import app.models.user  # noqa: F401
+import app.models.project  # noqa: F401
 # Add future model imports below as models are created:
-# from app.models.user import User  # noqa: F401
-# from app.models.project import Project  # noqa: F401
-# from app.models.paper import Paper  # noqa: F401
+# import app.models.paper  # noqa: F401
 
 settings = get_settings()
 
