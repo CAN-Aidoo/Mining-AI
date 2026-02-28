@@ -1,13 +1,19 @@
 /**
- * Mining AI Platform - Zustand Store Root
+ * Mining AI Platform - Zustand Store
  *
- * Week 1: UI state only.
- * Week 2+: Add user auth slice, project slice, generation slice, etc.
+ * Slices:
+ *   useUIStore   — sidebar open/close
+ *   useAuthStore — JWT tokens + current user (persisted to localStorage)
  */
 
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+"use client";
 
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
+
+// ---------------------------------------------------------------------------
+// UI store
+// ---------------------------------------------------------------------------
 interface UIState {
   sidebarOpen: boolean;
   toggleSidebar: () => void;
@@ -18,10 +24,63 @@ export const useUIStore = create<UIState>()(
   devtools(
     (set) => ({
       sidebarOpen: true,
-      toggleSidebar: () =>
-        set((state) => ({ sidebarOpen: !state.sidebarOpen })),
-      setSidebarOpen: (open: boolean) => set({ sidebarOpen: open }),
+      toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
+      setSidebarOpen: (open) => set({ sidebarOpen: open }),
     }),
     { name: "ui-store" }
+  )
+);
+
+// ---------------------------------------------------------------------------
+// Auth types
+// ---------------------------------------------------------------------------
+export interface AuthUser {
+  id: string;
+  email: string;
+  full_name: string;
+  is_active: boolean;
+  created_at: string;
+}
+
+interface AuthState {
+  user: AuthUser | null;
+  accessToken: string | null;
+  refreshToken: string | null;
+  isAuthenticated: boolean;
+  setTokens: (access: string, refresh: string) => void;
+  setUser: (user: AuthUser) => void;
+  logout: () => void;
+}
+
+export const useAuthStore = create<AuthState>()(
+  devtools(
+    persist(
+      (set) => ({
+        user: null,
+        accessToken: null,
+        refreshToken: null,
+        isAuthenticated: false,
+        setTokens: (access, refresh) =>
+          set({ accessToken: access, refreshToken: refresh, isAuthenticated: true }),
+        setUser: (user) => set({ user }),
+        logout: () =>
+          set({
+            user: null,
+            accessToken: null,
+            refreshToken: null,
+            isAuthenticated: false,
+          }),
+      }),
+      {
+        name: "mining-auth",
+        partialize: (s) => ({
+          user: s.user,
+          accessToken: s.accessToken,
+          refreshToken: s.refreshToken,
+          isAuthenticated: s.isAuthenticated,
+        }),
+      }
+    ),
+    { name: "auth-store" }
   )
 );

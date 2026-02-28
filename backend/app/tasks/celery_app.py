@@ -16,10 +16,9 @@ celery_app = Celery(
     broker=settings.CELERY_BROKER_URL,
     backend=settings.CELERY_RESULT_BACKEND,
     include=[
-        # Register task modules here as they are created:
-        # "app.tasks.research_tasks",
-        # "app.tasks.document_tasks",
-        # "app.tasks.prototype_tasks",
+        "app.tasks.research_tasks",
+        "app.tasks.document_tasks",
+        "app.tasks.prototype_tasks",
     ],
 )
 

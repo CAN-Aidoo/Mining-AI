@@ -27,11 +27,7 @@ async def test_health_check_returns_json(async_client: AsyncClient) -> None:
 @pytest.mark.anyio
 async def test_stub_routes_return_501(async_client: AsyncClient) -> None:
     """Verify all stub routes are registered (return 501, not 404)."""
-    stub_routes = [
-        "/api/v1/research/",
-        "/api/v1/documents/",
-        "/api/v1/prototypes/",
-    ]
+    stub_routes: list[str] = []  # all routes are now implemented
     for route in stub_routes:
         response = await async_client.get(route)
         assert response.status_code == 501, (
